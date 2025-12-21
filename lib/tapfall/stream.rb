@@ -3,20 +3,36 @@ require_relative 'version'
 require_relative 'messages/tap_message'
 
 class Tapfall::Stream < Skyfall::Stream
-  def initialize(server)
+  def initialize(server, options = {})
     super(server)
 
+    @options = options
     @root_url = ensure_empty_path(@root_url)
+    @ack = true unless options[:ack] == false
   end
 
-  def handle_message(msg)
-    data = msg.data
+  def connect
+    if @ack && @handlers[:message].nil?
+      raise ConfigError, "The on(:message) handler must be set unless :ack => false option is passed"
+    end
+
+    super
+  end
+
+  def handle_message(packet)
+    data = packet.data
     @handlers[:raw_message]&.call(data)
 
     if @handlers[:message]
       tap_message = Tapfall::TapMessage.new(data)
       @handlers[:message].call(tap_message)
+      send_ack(tap_message) if @ack
     end
+  end
+
+  def send_ack(msg)
+    json = JSON.generate(type: 'ack', id: msg.id)
+    send_data(json)
   end
 
   private
