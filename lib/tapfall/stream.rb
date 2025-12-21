@@ -31,7 +31,7 @@ class Tapfall::Stream < Skyfall::Stream
   end
 
   def send_ack(msg)
-    json = JSON.generate(type: 'ack', id: msg.id)
+    json = %({"type":"ack","id":#{msg.id}})
     send_data(json)
   end
 
