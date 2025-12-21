@@ -1,15 +1,25 @@
+require 'forwardable'
 require 'skyfall/stream'
+
+require_relative 'api'
+require_relative 'errors'
 require_relative 'messages/tap_message'
 require_relative 'version'
 
 module Tapfall
   class Tapfall::Stream < Skyfall::Stream
+    extend Forwardable
+
+    def_delegators :@api, :add_repo, :add_repos, :remove_repo, :remove_repos
+
     def initialize(server, options = {})
       super(server)
 
       @options = options
       @root_url = ensure_empty_path(@root_url)
       @ack = true unless options[:ack] == false
+
+      @api = API.new(build_api_url)
     end
 
     def connect
@@ -40,6 +50,14 @@ module Tapfall
 
     def build_websocket_url
       @root_url + "/channel"
+    end
+
+    def build_api_url
+      if @root_url.start_with?('ws://')
+        @root_url.gsub(/^ws:/, 'http:')
+      else
+        @root_url.gsub(/^wss:/, 'https:')
+      end
     end
   end
 end
