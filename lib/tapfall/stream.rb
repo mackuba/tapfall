@@ -18,8 +18,9 @@ module Tapfall
       @options = options
       @root_url = ensure_empty_path(@root_url)
       @ack = true unless options[:ack] == false
+      @password = options[:admin_password]
 
-      @api = API.new(build_api_url)
+      @api = build_api
     end
 
     def connect
@@ -48,6 +49,18 @@ module Tapfall
 
     private
 
+    def basic_auth(account, password)
+      'Basic ' + ["#{account}:#{password}"].pack('m0')
+    end
+
+    def request_headers
+      if @password
+        { 'Authorization' => basic_auth('admin', @password) }
+      else
+        {}
+      end
+    end
+
     def build_websocket_url
       @root_url + "/channel"
     end
@@ -58,6 +71,11 @@ module Tapfall
       else
         @root_url.gsub(/^wss:/, 'https:')
       end
+    end
+
+    def build_api
+      api_url = build_api_url
+      API.new(api_url, { admin_password: @password })
     end
   end
 end

@@ -4,8 +4,9 @@ require 'uri'
 
 module Tapfall
   class API
-    def initialize(server)
+    def initialize(server, options = {})
       @root_url = build_root_url(server)
+      @options = options
     end
 
     def add_repo(did)
@@ -54,6 +55,10 @@ module Tapfall
       request = Net::HTTP::Post.new(uri)
       request.body = JSON.generate(json_data)
       request.content_type = "application/json"
+
+      if @options[:admin_password]
+        request.basic_auth('admin', @options[:admin_password])
+      end
 
       response = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => (uri.scheme == 'https')) do |http|
         http.request(request)
