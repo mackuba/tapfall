@@ -24,4 +24,6 @@ Gem::Specification.new do |spec|
   end
 
   spec.require_paths = ["lib"]
+
+  spec.add_dependency 'skyfall', '~> 0.6'
 end
