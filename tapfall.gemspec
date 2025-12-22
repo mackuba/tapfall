@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email = ["jakub.suder@gmail.com"]
 
   spec.summary = "A gem for ingesting ATProto repository data from a Tap service (extension of the Skyfall gem)"
-  spec.description = "TODO: Write a longer description or delete this line."
+  # spec.description = "TODO: Write a longer description or delete this line."
   spec.homepage = "https://ruby.sdk.blue"
 
   spec.license = "Zlib"

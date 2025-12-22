@@ -35,7 +35,7 @@ So instead of two ways of importing the records, you only have one and it's the 
 
 Add this to your `Gemfile`:
 
-    gem 'tapfall', '~> 0.1'
+    gem 'tapfall'
 
 
 ## Usage
