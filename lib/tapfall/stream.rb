@@ -49,6 +49,26 @@ module Tapfall
 
     private
 
+    # TMP
+    def send_data(data)
+      @ws.send(data)
+    end
+
+    def build_websocket_client(url)
+      Faye::WebSocket::Client.new(url, nil, { headers: { 'User-Agent' => user_agent }.merge(request_headers) })
+    end
+
+    def ensure_empty_path(url)
+      url = url.chomp('/')
+
+      if URI(url).path != ''
+        raise ArgumentError, "Server URL should only include a hostname, without any path"
+      end
+
+      url
+    end
+    # END
+
     def basic_auth(account, password)
       'Basic ' + ["#{account}:#{password}"].pack('m0')
     end
