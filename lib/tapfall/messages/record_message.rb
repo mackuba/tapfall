@@ -8,8 +8,14 @@ module Tapfall
       super
     end
 
-    def operations
-      @operations ||= [Operation.new(json['record'])]
+    def operation
+      @operation ||= Operation.new(json['record'])
     end
+
+    def operations
+      [operation]
+    end
+
+    alias op operation
   end
 end

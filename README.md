@@ -116,7 +116,7 @@ All message types share these properties:
 - `type` (symbol) – the message type identifier, e.g. `:record`
 - `id` (integer), aliased as `seq` – a sequential index of the message
 
-The `:record` messages have an `operations` method, which includes an array of add/remove/edit `Operation`s done on some records. Currently Tap event format only includes one single record operation in each event, but it's returned as an array here for symmetry with the `Skyfall::Firehose` stream version.
+The `:record` messages have an `operation` method (aliased as `op`), which returns an `Operation` object with details of an create/update/delete operation done a record. (For symmetry with the `Skyfall::Firehose` stream version, there's also an `operations` method which returns an array.)
 
 An `Operation` has such fields (also matching the API of `Skyfall::Firehose::Operation` and `Skyfall::Jetstream::Operation`):
 
