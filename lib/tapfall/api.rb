@@ -25,6 +25,10 @@ module Tapfall
       post_request('/repos/remove', { dids: dids })
     end
 
+    def resolve_did(did)
+      get_request("/resolve/#{did}")
+    end
+
     private
 
     def build_root_url(server)
@@ -49,6 +53,22 @@ module Tapfall
       end
     end
 
+    def get_request(path)
+      uri = URI(@root_url + path)
+
+      request = Net::HTTP::Get.new(uri)
+
+      if @options[:admin_password]
+        request.basic_auth('admin', @options[:admin_password])
+      end
+
+      response = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => (uri.scheme == 'https')) do |http|
+        http.request(request)
+      end
+
+      handle_response(response)
+    end
+
     def post_request(path, json_data)
       uri = URI(@root_url + path)
 
@@ -64,6 +84,10 @@ module Tapfall
         http.request(request)
       end
 
+      handle_response(response)
+    end
+
+    def handle_response(response)
       status = response.code.to_i
       message = response.message
       response_body = (response.content_type == 'application/json') ? JSON.parse(response.body) : response.body

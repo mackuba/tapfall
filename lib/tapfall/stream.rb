@@ -10,7 +10,7 @@ module Tapfall
   class Tapfall::Stream < Skyfall::Stream
     extend Forwardable
 
-    def_delegators :@api, :add_repo, :add_repos, :remove_repo, :remove_repos
+    def_delegators :@api, :add_repo, :add_repos, :remove_repo, :remove_repos, :resolve_did
 
     def initialize(server, options = {})
       super(server)
