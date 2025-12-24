@@ -20,7 +20,7 @@ module Tapfall
     end
 
     def active?
-      @identity['isActive']
+      @identity['isActive'] || @identity['is_active']
     end
 
     def status
