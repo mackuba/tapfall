@@ -148,6 +148,9 @@ tap.on_message do |m|
 end
 ```
 
+> [!NOTE]
+> If you're doing a full network backfill of some app.bsky.* lexicons, that's going to be a *lot* of events that Tap will be sending to you, on localhost (so not limited by network bandwidth), likely in large bursts. In that case it's [recommended](https://bsky.app/profile/did:plc:ragtjsm2j2vknwkz3zp4oxrd/post/3mawmnwukws2w) to try to do as little processing as possible in the event handling loop, and especially avoid any sync network requests there. If you're working with a limited number of repos and/or with non-Bluesky lexicons only, this is probably much less of an issue.
+
 
 ### Note on custom lexicons
 
