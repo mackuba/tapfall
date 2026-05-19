@@ -1,5 +1,7 @@
 # Tapfall
 
+[![Gem Version](https://badge.fury.io/rb/tapfall.svg?icon=si%3Arubygems&icon_color=%23ff6251)](https://rubygems.org/gems/tapfall)
+
 A Ruby gem for ingesting ATProto repository data from a [Tap](https://github.com/bluesky-social/indigo/tree/main/cmd/tap) service (extension of the [Skyfall](https://tangled.org/mackuba.eu/skyfall) gem).
 
 > [!NOTE]
