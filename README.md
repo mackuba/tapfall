@@ -205,6 +205,12 @@ To remove repos from the list, use:
 ```
 
 
+## Other resources
+
+- [ruby.sdk.blue](https://ruby.sdk.blue)
+- [Example script(s)](https://ruby.sdk.blue/examples/list_labellers.html)
+
+
 ## Credits
 
 Copyright © 2025 Kuba Suder ([@mackuba.eu](https://bsky.app/profile/did:plc:oio4hkxaop4ao4wz2pp3f4cr)).
